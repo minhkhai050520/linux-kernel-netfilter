@@ -81,7 +81,6 @@ static int __init myfw_init(void)
 
 static void __exit myfw_exit(void)
 {
-    /* Unregister hook khi rmmod de tranh crash Kernel */
     nf_unregister_net_hook(&init_net, &my_nf_hook_ops);
     pr_info("[MYFW] Netfilter Hook unregistered. Goodbye!\n");
 }
