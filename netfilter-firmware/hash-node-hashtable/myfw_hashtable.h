@@ -13,6 +13,8 @@
 #include <linux/udp.h>
 #include <linux/tcp.h>
 
+#define FW_RULE_HTABLE_BITS 8
+
 enum fw_action {
     FW_ACTION_DROP = 0,
     FW_ACTION_ACCEPT
@@ -38,5 +40,8 @@ struct fw_rule_node {
     struct hlist_node node;
     struct rcu_head rcu;
 };
+
+u32 get_rule_hash(u32 src_ip);
+extern struct hlist_head fw_rule_htable[1 << FW_RULE_HTABLE_BITS] __read_mostly;
 
 #endif
