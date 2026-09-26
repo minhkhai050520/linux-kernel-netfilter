@@ -1,4 +1,7 @@
 #include "myfw_nf_hook.h"
+#include <linux/ip.h>
+#include <linux/udp.h>
+#include <linux/tcp.h>
 
 unsigned int ipv4_nf_hook_fn(void *priv,
 				      struct sk_buff *skb,

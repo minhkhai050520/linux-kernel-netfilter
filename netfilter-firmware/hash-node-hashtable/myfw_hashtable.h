@@ -4,14 +4,11 @@
 #include <linux/hashtable.h>
 #include <linux/types.h>
 #include <linux/jhash.h>
-#include <linux/spinlock_types.h>
 #include <linux/netfilter.h>
 #include <linux/skbuff.h>
 #include <linux/kernel.h>
 #include <linux/netfilter_ipv4.h>
-#include <linux/ip.h>
-#include <linux/udp.h>
-#include <linux/tcp.h>
+
 
 #define FW_RULE_HTABLE_BITS 8
 
