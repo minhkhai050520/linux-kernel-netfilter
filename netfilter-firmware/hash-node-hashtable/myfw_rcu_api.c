@@ -24,3 +24,24 @@ u8 lookup_rule_rcu(const struct fw_tuple *tuple)
 
     return action;
 }
+
+int add_rule_rcu(const struct fw_rule_node *rule)
+{
+    struct fw_rule_node *new_rule;
+    u32 key = get_rule_hash(rule->src_ip);
+
+    new_rule = kmalloc(sizeof(struct fw_rule_node), GFP_KERNEL);
+    if (!new_rule)
+        return -ENOMEM;
+
+    new_rule->src_ip = rule->src_ip;
+    new_rule->dst_ip = rule->dst_ip;
+    new_rule->src_port = rule->src_port;
+    new_rule->dst_port = rule->dst_port;
+    new_rule->proto = rule->proto;
+    new_rule->action = rule->action;
+
+    hash_add_rcu(fw_rule_htable, &new_rule->node, key);
+
+    return 0;
+}

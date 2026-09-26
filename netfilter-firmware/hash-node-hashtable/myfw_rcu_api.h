@@ -4,4 +4,6 @@
 #include "myfw_hashtable.h"
 
 u8 lookup_rule_rcu(const struct fw_tuple *tuple);
-#endif
+int add_rule_rcu(const struct fw_rule_node *rule);
+
+#endif /* __MYFW_RCU_API_H */
