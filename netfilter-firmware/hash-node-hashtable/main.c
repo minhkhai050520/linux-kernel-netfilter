@@ -2,6 +2,7 @@
 #include "myfw_hashtable.h"
 #include "myfw_rcu_api.h"
 #include "myfw_nf_hook.h"
+#include "myfw_spinlock.h"
 
 static struct nf_hook_ops my_nf_hook_ops;
 
