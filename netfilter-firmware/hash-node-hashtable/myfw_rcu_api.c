@@ -41,7 +41,15 @@ int add_rule_rcu(const struct fw_rule_node *rule)
     new_rule->proto = rule->proto;
     new_rule->action = rule->action;
 
+    spin_lock_bh(&myfw_write_lock);
     hash_add_rcu(fw_rule_htable, &new_rule->node, key);
+    spin_unlock_bh(&myfw_write_lock);
+
+    pr_info("[MYFW] Rule added: %pI4:%u -> %pI4:%u, proto: %u, action: %s\n",
+            &new_rule->src_ip, ntohs(new_rule->src_port),
+            &new_rule->dst_ip, ntohs(new_rule->dst_port),
+            new_rule->proto,
+            new_rule->action == FW_ACTION_DROP ? "DROP" : "ACCEPT");
 
     return 0;
 }

@@ -6,8 +6,6 @@
 
 static struct nf_hook_ops my_nf_hook_ops;
 
-// static DEFINE_SPINLOCK(myfw_write_lock);
-
 static int __init myfw_init(void)
 {
     int ret;
