@@ -53,3 +53,19 @@ int add_rule_rcu(const struct fw_rule_node *rule)
 
     return 0;
 }
+
+void clean_hashtable_rcu(void)
+{
+    struct fw_rule_node *rule;
+    struct hlist_node *tmp;
+    int bkt;
+
+    spin_lock_bh(&myfw_write_lock);
+    hash_for_each_safe(fw_rule_htable, bkt, tmp, rule, node) {
+        hash_del_rcu(&rule->node);
+        kfree_rcu(rule, rcu);
+    }
+    spin_unlock_bh(&myfw_write_lock);
+
+    pr_info("[MYFW] Hashtable cleaned up.\n");
+}

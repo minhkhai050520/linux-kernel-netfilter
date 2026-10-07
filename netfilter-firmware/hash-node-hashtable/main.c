@@ -21,6 +21,7 @@ static int __init myfw_init(void)
     if (ret < 0)
     {
         pr_err("[MYFW] Failed to register Netfilter hook!\n");
+        clean_hashtable_rcu();
         return -1;
     }
 
@@ -30,6 +31,11 @@ static int __init myfw_init(void)
 static void __exit myfw_exit(void)
 {
     nf_unregister_net_hook(&init_net, &my_nf_hook_ops);
+
+    clean_hashtable_rcu();
+
+    rcu_barrier();
+
     pr_info("[MYFW_DAY1] Module unloaded.\n");
 }
 
