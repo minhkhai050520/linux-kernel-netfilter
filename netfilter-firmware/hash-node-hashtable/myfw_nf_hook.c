@@ -62,7 +62,7 @@ unsigned int ipv4_nf_hook_fn(void *priv,
     action = lookup_rule_rcu(&tuple);
 
     if (action == FW_ACTION_DROP) {
-        pr_info("[MYFW] UDP from %pI4:%u to %pI4:%u\n", &tuple.src_ip, ntohs(tuple.src_port), &tuple.dst_ip, ntohs(tuple.dst_port));
+        pr_info("[MYFW] protocol %u from %pI4:%u to %pI4:%u dropped\n", tuple.proto, &tuple.src_ip, ntohs(tuple.src_port), &tuple.dst_ip, ntohs(tuple.dst_port));
         return action;
     }
 

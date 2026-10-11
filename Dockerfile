@@ -62,5 +62,9 @@ RUN groupadd -g ${GROUP_ID} kernel_builder && \
     useradd -m -u ${USER_ID} -g ${GROUP_ID} -s /bin/bash kernel_builder && \
     echo "kernel_builder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+ENV PATH="/workspace/toolchains/bootlin-gcc14/bin:${PATH}"
+ENV ARCH="arm64"
+ENV CROSS_COMPILE="aarch64-linux-"
+
 USER kernel_builder
 WORKDIR /workspace

@@ -9,11 +9,12 @@ u8 lookup_rule_rcu(const struct fw_tuple *tuple)
     rcu_read_lock();
 
     hash_for_each_possible_rcu(fw_rule_htable, rule, node, key) {
-        if (rule->src_ip == tuple->src_ip &&
-            rule->dst_ip == tuple->dst_ip &&
-            rule->src_port == tuple->src_port &&
-            rule->dst_port == tuple->dst_port &&
-            rule->proto == tuple->proto) {
+
+        if ((rule->src_ip == tuple->src_ip || rule->src_ip == 0) &&
+            (rule->dst_ip == tuple->dst_ip || rule->dst_ip == 0) &&
+            (rule->src_port == tuple->src_port || rule->src_port == 0) &&
+            (rule->dst_port == tuple->dst_port || rule->dst_port == 0) &&
+            (rule->proto == tuple->proto || rule->proto == 0)) {
 
                 action = rule->action;
                 break;
