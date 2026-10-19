@@ -1,4 +1,5 @@
 #include "myfw_nf_hook.h"
+#include "myfw_stats.h"
 #include <linux/ip.h>
 #include <linux/udp.h>
 #include <linux/tcp.h>
@@ -26,6 +27,8 @@ unsigned int ipv4_nf_hook_fn(void *priv,
         pr_err("[MYFW] Invalid IP header!\n");
         return NF_ACCEPT;
     }
+
+    myfw_counter_do(&myfw_priv, skb, FW_ACTION_ACCEPT);
 
     tuple.src_ip = iph->saddr;
     tuple.dst_ip = iph->daddr;
@@ -62,6 +65,7 @@ unsigned int ipv4_nf_hook_fn(void *priv,
     action = lookup_rule_rcu(&tuple);
 
     if (action == FW_ACTION_DROP) {
+        myfw_counter_do(&myfw_priv, skb, FW_ACTION_DROP);
         pr_info("[MYFW] protocol %u from %pI4:%u to %pI4:%u dropped\n", tuple.proto, &tuple.src_ip, ntohs(tuple.src_port), &tuple.dst_ip, ntohs(tuple.dst_port));
         return action;
     }
