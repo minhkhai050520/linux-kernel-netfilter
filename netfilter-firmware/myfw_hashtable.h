@@ -23,6 +23,7 @@ struct fw_tuple {
     u16 src_port;
     u16 dst_port;
     u8  proto;
+    enum fw_action action;
 };
 
 struct fw_rule_node {

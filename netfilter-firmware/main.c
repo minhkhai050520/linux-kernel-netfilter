@@ -13,19 +13,8 @@ static struct nf_hook_ops my_nf_hook_ops;
 static int __init myfw_init(void)
 {
     int ret;
-    struct fw_rule_node tmp_rule;
 
     hash_init(fw_rule_htable);
-
-    memset(&tmp_rule, 0, sizeof(struct fw_rule_node));
-
-    tmp_rule.src_ip = in_aton("192.168.1.102");
-    tmp_rule.dst_ip = 0;
-    tmp_rule.src_port = 0;
-    tmp_rule.dst_port = htons(3000);
-    tmp_rule.proto = IPPROTO_TCP;
-    tmp_rule.action = FW_ACTION_DROP;
-    add_rule_rcu(&tmp_rule);
 
     myfw_priv.fw_stats_ptr = alloc_percpu(struct myfw_stats);
 
