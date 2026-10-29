@@ -61,6 +61,7 @@ int del_rule_rcu(const struct fw_tuple *tuple)
 {
     struct fw_rule_node *del_rule;
     struct hlist_node *tmp;
+    int ret = -ENOENT;
     u32 key = get_rule_hash(tuple->src_ip);
 
     spin_lock_bh(&myfw_write_lock);
@@ -79,12 +80,13 @@ int del_rule_rcu(const struct fw_tuple *tuple)
                         &tuple->dst_ip, ntohs(tuple->dst_port),
                         tuple->proto);
 
-                return 0;
+                ret = 0;
+                break;
         }
     }
     spin_unlock_bh(&myfw_write_lock);
 
-    return -ENOENT;
+    return ret;
 }
 
 void clean_hashtable_rcu(void)
