@@ -22,7 +22,7 @@ static int __init myfw_init(void)
         return -ENOMEM;
 
     ret = myfw_init_procfs();
-    if (ret < 0) {
+    if (ret) {
         free_percpu(myfw_priv.fw_stats_ptr);
         return ret;
     }
@@ -33,7 +33,7 @@ static int __init myfw_init(void)
     my_nf_hook_ops.priority = NF_IP_PRI_FIRST;
 
     ret = nf_register_net_hook(&init_net, &my_nf_hook_ops);
-    if (ret < 0)
+    if (ret)
     {
         pr_err("[MYFW] Failed to register Netfilter hook!\n");
         clean_hashtable_rcu();

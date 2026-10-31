@@ -1,4 +1,9 @@
 *.o
 *.ko
+*.cmd
+*.mod
+*mod.c
+*.symvers
+*.order
 linux-custom/
 toolchains/
