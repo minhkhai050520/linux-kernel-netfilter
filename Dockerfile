@@ -11,19 +11,14 @@ RUN apt-get update && apt-get install -y \
     make \
     bison \
     flex \
-    # 2. Cross-compilers for ARM64 (aarch64) and ARM32 (armhf)
-    gcc-aarch64-linux-gnu \
-    g++-aarch64-linux-gnu \
-    gcc-arm-linux-gnueabihf \
-    g++-arm-linux-gnueabihf \
-    # 3. Header libraries & tools for generating BTF/debug info for kernel (required)
+    # 2. Header libraries & tools for generating BTF/debug info for kernel (required)
     libncurses-dev \
     libssl-dev \
     libelf-dev \
     dwarves \
     pahole \
     kmod \
-    # 4. Packaging, compression & build system utilities
+    # 3. Packaging, compression & build system utilities
     bash \
     bc \
     binutils \

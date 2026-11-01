@@ -6,7 +6,7 @@ myfw-objs := main.o myfw_rcu_api.o myfw_nf_hook.o \
 
 KDIR ?= $(abspath $(CURDIR)/../linux-custom)
 ARCH ?= arm64
-CROSS_COMPILE ?= aarch64-linux-gnu-
+CROSS_COMPILE ?= aarch64-linux-
 
 .PHONY: all clean
 

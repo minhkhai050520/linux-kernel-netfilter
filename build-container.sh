@@ -8,10 +8,6 @@ TOOLCHAIN_DIR="${PROJECT_DIR}/toolchains/bootlin-gcc14"
 
 # 1. Automatically check and download Bootlin GCC 14 Toolchain if not present on the host
 if [ ! -f "${TOOLCHAIN_DIR}/bin/aarch64-linux-gcc" ]; then
-    echo "========================================================"
-    echo "[HOST] Bootlin GCC 14 Toolchain not found."
-    echo "[HOST] Downloading toolchain to ${TOOLCHAIN_DIR}..."
-    echo "========================================================"
 
     mkdir -p "${TOOLCHAIN_DIR}"
 
@@ -27,17 +23,13 @@ fi
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 
-echo "========================================================"
-echo "[HOST] Building Docker image: $IMAGE_NAME (UID: $USER_ID, GID: $GROUP_ID)"
-echo "========================================================"
+# Building Docker image $IMAGE_NAME
 docker build \
     --build-arg USER_ID="$USER_ID" \
     --build-arg GROUP_ID="$GROUP_ID" \
     -t "$IMAGE_NAME" "$PROJECT_DIR"
 
-echo "========================================================"     
-echo "[HOST] Starting Docker container with bind mount to $PROJECT_DIR"
-echo "========================================================"
+# Starting Docker container with bind mount to $PROJECT_DIR"
 docker run --rm -it \
     -v "$PROJECT_DIR":/workspace \
     -w /workspace \

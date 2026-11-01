@@ -86,4 +86,4 @@ module_exit(myfw_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Embedded Linux Dev");
-MODULE_DESCRIPTION("RCU Hashtable Initialization");
+MODULE_DESCRIPTION("Add a simple firewall to the linux kernel");
