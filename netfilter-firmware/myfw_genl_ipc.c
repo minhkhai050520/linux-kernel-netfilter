@@ -220,7 +220,7 @@ static int myfw_genl_dump_rules(struct sk_buff *skb, struct netlink_callback *cb
                                  cb->nlh->nlmsg_seq, cb, NLM_F_MULTI);
         if (ret)
             break;
-        
+
         last_idx++;
     }
 
@@ -232,30 +232,25 @@ static int myfw_genl_dump_rules(struct sk_buff *skb, struct netlink_callback *cb
 static const struct genl_small_ops myfw_ops[] = {
     {
         .cmd = MYFW_CMD_ADD_RULE,
-        .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
         .doit = myfw_genl_add_rule,
         .flags = GENL_UNS_ADMIN_PERM,
     },
     {
         .cmd = MYFW_CMD_DEL_RULE,
-        .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
         .doit = myfw_genl_del_rule,
         .flags = GENL_UNS_ADMIN_PERM,
     },
     {
         .cmd = MYFW_CMD_GET_RULES,
-        .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
         .dumpit = myfw_genl_dump_rules,
     },
     {
         .cmd = MYFW_CMD_GET_STATS,
-        .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
         .doit = myfw_genl_do_get_stats,
         .flags = GENL_UNS_ADMIN_PERM,
     },
     {
         .cmd = MYFW_CMD_RESET_STATS,
-        .validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
         .doit = myfw_genl_reset_stats,
     },
 };
