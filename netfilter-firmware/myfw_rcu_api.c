@@ -6,7 +6,7 @@ u8 lookup_rule_rcu(const struct fw_tuple *tuple)
 {
     struct fw_rule_node *rule;
     u32 key = get_rule_hash(tuple->src_ip);
-    u8 action = FW_ACTION_ACCEPT;
+    u8 action = 2;
 
     rcu_read_lock();
 

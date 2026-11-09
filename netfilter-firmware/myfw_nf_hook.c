@@ -28,8 +28,6 @@ unsigned int ipv4_nf_hook_fn(void *priv,
         return NF_ACCEPT;
     }
 
-    myfw_counter_do(&myfw_priv, skb, FW_ACTION_ACCEPT);
-
     tuple.src_ip = iph->saddr;
     tuple.dst_ip = iph->daddr;
     tuple.proto = iph->protocol;
@@ -64,11 +62,12 @@ unsigned int ipv4_nf_hook_fn(void *priv,
 
     action = lookup_rule_rcu(&tuple);
 
-    if (action == FW_ACTION_DROP) {
+    if (action == FW_ACTION_DROP)
         myfw_counter_do(&myfw_priv, skb, FW_ACTION_DROP);
-        pr_info("[MYFW] protocol %u from %pI4:%u to %pI4:%u dropped\n", tuple.proto, &tuple.src_ip, ntohs(tuple.src_port), &tuple.dst_ip, ntohs(tuple.dst_port));
-        return action;
-    }
+    else if (action == FW_ACTION_ACCEPT)
+        myfw_counter_do(&myfw_priv, skb, FW_ACTION_ACCEPT);
+    else
+        return FW_ACTION_ACCEPT; /* Default action */
 
     return action;
 }

@@ -85,5 +85,5 @@ module_init(myfw_init);
 module_exit(myfw_exit);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Embedded Linux Dev");
+MODULE_AUTHOR("Embedded Linux Dev khainpm");
 MODULE_DESCRIPTION("Add a simple firewall to the linux kernel");
