@@ -285,7 +285,46 @@ lsmod
 ## 6. Benchmarking and Validation
 
 This section documents the measured test results collected during runtime validation of the kernel module. The objective was to evaluate throughput stability, resilience under SYN flood conditions, and memory behavior.
+```bash
+┌─────────────────────────────────────────────────────────┐
+│                  TRAFFIC GENERATOR PC                   │
+│  • iperf3 client (TCP/UDP Throughput Test)              │
+│  • hping3 (SYN Flood / Stress Test)                     │
+└────────────────────────────┬────────────────────────────┘
+                             │
+                             │ 1 Gbps Ethernet Link (192.168.10.0/24)
+                             ▼
+┌─────────────────────────────────────────────────────────┐
+│         RASPBERRY PI 4 / ARM64 (DEVICE UNDER TEST)      │
+│                                                         │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │        RPi 4 Physical NIC (eth0: 192.168.10.1)    │  │
+│  └─────────────────────────┬─────────────────────────┘  │
+│                            │ struct sk_buff             │
+│                            ▼                            │
+│  [ KERNEL SPACE ]                                       │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │              Netfilter Hook Handler               │  │
+│  │            (NF_INET_PRE_ROUTING hook)             │  │
+│  └──────────────┬─────────────────────┬──────────────┘  │
+│                 │ Rule Lookup         │ Update Stats    │
+│                 ▼                     ▼                 │
+│  ┌─────────────────────────┐ ┌───────────────────────┐  │
+│  │ RCU Blocklist Hashtable │ │   Per-CPU Collector   │  │
+│  │   (Fast Rule Matching)  │ │   (Packet/Byte Stats) │  │
+│  └──────────────┬──────────┘ └───────────┬───────────┘  │
+│                 │                        │              │
+│  ═══════════════╪════════════════════════╪════════════  │
+│                 │    Generic Netlink     │              │
+│                 ▼                        ▼              │
+│  [ USER SPACE ]                                         │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │            myfw-ctl / myfw-loop-test.sh           │  │
+│  │        (Rule Management & Stat Monitoring)        │  │
+│  └───────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────┘
 
+```
 ### 6.1 Throughput Impact
 
 Test target: Raspberry Pi / ARM64 environment with a 1 Gbps link.
