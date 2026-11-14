@@ -624,3 +624,26 @@ This kernel module is a compact, educational, and practical network filtering pr
 - per-CPU statistics accounting
 - kernel telemetry via procfs
 - user-kernel communication via Generic Netlink
+---
+
+### 9. References
+
+#### Netlink & Generic Netlink
+* [Introduction to Netlink — The Linux Kernel Documentation](https://docs.kernel.org/userspace-api/netlink/intro.html)
+* [Netlink Handbook — The Linux Kernel Documentation](https://docs.kernel.org/userspace-api/netlink/index.html)
+* [Netlink Library (libnl) Core Documentation](https://www.infradead.org/~tgr/libnl/doc/core.html)
+* [Generic Netlink Library (libnl-genl) API Reference](https://www.infradead.org/~tgr/libnl/doc/api/group__genl.html)
+* [mac80211_hwsim.c (Linux v6.12.61) — Kernel Generic Netlink Example](https://elixir.bootlin.com/linux/v6.12.61/source/drivers/net/wireless/virtual/mac80211_hwsim.c#L6306)
+* [iw (nl80211 Userspace CLI Utility) — GitHub](https://github.com/Distrotech/iw)
+
+#### Kernel Synchronization & Per-CPU Operations
+* [this_cpu Operations — The Linux Kernel Documentation](https://www.kernel.org/doc/html/latest/_sources/core-api/this_cpu_ops.rst.txt)
+* [What is RCU? ("Read, Copy, Update") — The Linux Kernel Documentation](https://docs.kernel.org/RCU/whatisRCU.html)
+* [hashtable.h (Linux v6.12.61) — Kernel RCU-enabled Hash Table](https://elixir.bootlin.com/linux/v6.12.61/source/include/linux/hashtable.h)
+
+#### Virtual Filesystem & Statistics
+* [The seq_file Interface — The Linux Kernel Documentation](https://docs.kernel.org/filesystems/seq_file.html)
+* [u64_stats_sync.h (Linux v6.12.61) — 64-bit Statistics Synchronization](https://elixir.bootlin.com/linux/v6.12.61/source/include/linux/u64_stats_sync.h)
+
+#### Embedded Build System
+* [The Buildroot User Manual — Adding New Packages](https://buildroot.org/downloads/manual/manual.html#adding-packages)
